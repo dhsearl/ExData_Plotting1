@@ -1,0 +1,21 @@
+library(tidyverse)
+library(lubridate)
+
+# download zip file containing data if it hasn't already been downloaded
+zip_url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+zipFile <- "household_power_consumption.zip"
+
+if (!file.exists(zipFile)) {
+  download.file(zip_url, zipFile, mode = "wb")
+}
+
+datas <- read_delim(zipFile, delim = ";", na = "?", skip=66637, n_max=2880, col_names=F)
+colnames(datas) <- read_delim(zipFile, n_max = 1, col_names=F,delim=";")
+datas$Date <- as.Date(datas$Date, "%d/%m/%Y")
+datas$Datetime <- strptime(paste(datas$Date, datas$Time), "%Y-%m-%d %H:%M:%S")
+
+
+#plot1
+png(filename = "plot1.png", width=480, height=480)
+hist(datas$Global_active_power, col="red", xlab = "Global Active Power (kilowatts)", main = "Global Active Power")
+dev.off()
