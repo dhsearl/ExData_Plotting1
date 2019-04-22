@@ -1,3 +1,6 @@
+## This folder's .r scripts and .png plots were created by David Searl
+
+
 ## Introduction
 
 This assignment uses data from
